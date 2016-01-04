@@ -8,6 +8,7 @@ import android.widget.Toast;
  */
 public class ToastUtils {
     public static int LENGHT_MID = 2000; // Toast显示时间2秒
+    public static Toast mToast;
 
     public static void showToast(Activity ctx, int resID, int duration) {
         showToast(ctx, ctx.getString(resID), duration);
@@ -17,9 +18,9 @@ public class ToastUtils {
         showToast(ctx, resID, Toast.LENGTH_SHORT);
     }
 
-    public static void showToast(Activity ctx, String text, int duration) {
-        Toast.makeText(ctx, text, duration).show();
-    }
+//    public static void showToast(Activity ctx, String text, int duration) {
+//        Toast.makeText(ctx, text, duration).show();
+//    }
 
     public static void showToast(final Activity activity, final String msg) {
         // 判断当前的线程到底是主线程还是子线程
@@ -34,5 +35,15 @@ public class ToastUtils {
                 }
             });
         }
+    }
+
+    public static void showToast(Activity ctx, String text, int duration) {
+        if(mToast == null) {
+            mToast = Toast.makeText(ctx, text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
+        }
+        mToast.show();
     }
 }
